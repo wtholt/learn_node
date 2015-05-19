@@ -1,16 +1,39 @@
+// my solution...with help from GitHub
 var fs = require('fs')
 var path = require('path')
 
-module.exports = function (file, ext, callback){
-  fs.readdir(process.argv[2], function (err, list){
+module.exports = function (dir, ext, callback){
+  ext = "." + ext;
+  fs.readdir(dir, function (err, list){
     if (err)
       return callback(err);
 
-    list.forEach(function(file){
-      if (path.extname(file) === '.' + process.argv[3])
-        console.log(file)
-    })
+    var results = new Array();
+    for (var i = 0; i < list.length; i++)
+    {
+      if (path.extname(list[i]) === ext)
+        results.push(list[i]);
+    }
 
-    callback(null, list)
-  })
+    callback(null, results);
+  });
 }
+
+// official solution
+
+// var fs = require('fs')
+//     var path = require('path')
+
+//     module.exports = function (dir, filterStr, callback) {
+
+//       fs.readdir(dir, function (err, list) {
+//         if (err)
+//           return callback(err)
+
+//         list = list.filter(function (file) {
+//           return path.extname(file) === '.' + filterStr
+//         })
+
+//         callback(null, list)
+//       })
+//     }
